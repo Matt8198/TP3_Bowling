@@ -45,18 +45,17 @@ public class MultiPlayerJUnitTest {
     
     @Test
     
-   public void Spare() throws Exception{
+   public void ScoreSpare() throws Exception{
        mpg.startNewGame(playerName);
-       rollMany(2,4);
        rollMany(2,5);
-       rollMany(16,4);
-       assertEquals(30,mpg.scoreFor("Matthias"));
+       rollMany(6,2);
+       mpg.lancer(6);
+       assertEquals(22,mpg.scoreFor("Manon"));
    }
     
     @Test
     public void lancerJoueur1() throws Exception{
         mpg.startNewGame(playerName);
-        
         assertEquals(rollMany(2,2),"Prochain tir : joueur Matthias, Tour n°1, Boule n°1");
     }
     

@@ -15,11 +15,13 @@ import java.util.HashMap;
  */
 public class MultiPlayer implements MultiPlayerGame {
 
-    private  HashMap <String,SinglePlayerGame> jeu = new HashMap <String,SinglePlayerGame>();
+    private HashMap <String,SinglePlayerGame> jeu = new HashMap <String,SinglePlayerGame>();
     
     private ArrayList<String> name = new ArrayList<String>();
     
     private int currentPlayer=-1;
+    
+    private int nbTour=0;
     
     @Override
     public String startNewGame(String[] playerName) throws Exception {
@@ -50,19 +52,21 @@ public class MultiPlayer implements MultiPlayerGame {
             throw new UnsupportedOperationException("La partie n'a pas démarré");
         }
         
-        if (this.jeu.get(name.get(this.currentPlayer)).getCurrentFrame() ==null){
+        if (this.jeu.get(name.get(name.size()-1)).getCurrentFrame() ==null){
                 throw new UnsupportedOperationException("Le jeu est fini");
         }
         
         if (this.jeu.get(name.get(currentPlayer)).getCurrentFrame().isFinished() ){
-            this.currentPlayer=(this.currentPlayer+1) % name.size();     
+            this.currentPlayer=(this.currentPlayer+1) % name.size(); 
+            if (this.currentPlayer==0){
+                this.nbTour++;
+            }
         }
-        
         if (this.jeu.get(name.get(this.currentPlayer)).getCurrentFrame() !=null){
         	this.jeu.get(name.get(this.currentPlayer)).lancer(nombreDeQuillesAbattues);
         }
         
-        return affichage(this.currentPlayer,this.jeu.get(name.get(this.currentPlayer)).getCurrentFrame().getFrameNumber(),this.jeu.get(name.get(this.currentPlayer)).getCurrentFrame().getBallsThrown());
+        return affichage(this.currentPlayer,nbTour,this.jeu.get(name.get(this.currentPlayer)).getCurrentFrame().getBallsThrown());
     }
     
 
